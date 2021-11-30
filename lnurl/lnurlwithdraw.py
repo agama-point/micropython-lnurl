@@ -26,7 +26,6 @@ class LNURLWithdraw(LNURL):
 
     def init(self):
         data = self._callserver(self.url)
-        print(data)
 
         if "tag" not in data:
             raise LNURLException("Invalid URL, is not withdraw request")
@@ -50,8 +49,6 @@ class LNURLWithdraw(LNURL):
 
     def pay_invoice(self, invoice):
         data = self._callserver("{}?k1={}&pr={}".format(self._callback, self._k1, invoice))
-
-        print(data)
 
         if "status" in data and data['status'].upper() == "OK":
             return True
