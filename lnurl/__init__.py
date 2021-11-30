@@ -1,17 +1,21 @@
 from bech32 import bech32_decode, bech32_encode, convertbits
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __license__ = "MIT"
+
+
+class LNURLException(Exception):
+    pass
 
 
 class LNURL():
     def __init__(self):
-        pass
+        self._callback = None
 
 
     def __str__(self):
         """Return an informal representation suitable for printing."""
-        return ("LNURL: '{}' ({})").format(self.value, self.url)
+        return ("LNURL: '{}' ({})").format(self.lnurl, self.url)
 
 
     def __repr__(self):
@@ -19,39 +23,41 @@ class LNURL():
 
 
     @property
-    def value(self):
-        return self._value
+    def lnurl(self):
+        return self._lnurl
 
 
-    @value.setter
-    def value(self, value):
-        self._value = value
+    @lnurl.setter
+    def lnurl(self, lnurl):
+        self._lnurl = lnurl
 
 
     @property
     def url(self):
-        if not self.value:
+        if not self.lnurl:
             return None
 
-        parsed = bech32_decode(self._value)[1]
+        parsed = bech32_decode(self._lnurl)[1]
         decoded = convertbits(parsed, 5, 8, False)
         return bytes(decoded).decode()
 
 
     @url.setter
-    def url(self, value):
-        conv = convertbits(value.encode(), 8, 5)
+    def url(self, lnurl):
+        conv = convertbits(lnurl.encode(), 8, 5)
         encoded = bech32_encode("lnurl", conv).upper()
-        self._value = encoded
+        self._lnurl = encoded
 
 
-def from_url(url):
-    obj = LNURL()
-    obj.url = url
-    return obj
+    @classmethod
+    def from_url(cls, url):
+        obj = cls()
+        obj.url = url
+        return obj
 
 
-def from_lnurl(lnurl):
-    obj = LNURL()
-    obj.value = lnurl
-    return obj
+    @classmethod
+    def from_lnurl(cls, lnurl):
+        obj = cls()
+        obj.lnurl = lnurl
+        return obj
