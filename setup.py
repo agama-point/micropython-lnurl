@@ -26,7 +26,7 @@ setuptools.setup(
     name="micropython-"+NAME,
     version=find_meta("version"),
     license=find_meta("license"),
-    author="Petr Kracik",
+    author=find_meta("author"),
     author_email="petrkr@petrkr.net",
     description="LNURL library for micropython",
     long_description=long_description,

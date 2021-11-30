@@ -1,5 +1,7 @@
 from bech32 import bech32_decode, bech32_encode, convertbits
 
+
+__author__ = "Petr Kracik"
 __version__ = "0.0.2"
 __license__ = "MIT"
 
