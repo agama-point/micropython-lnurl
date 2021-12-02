@@ -11,10 +11,7 @@ class LNURLWithdraw(LNURL):
         response = urequests.get(url)
 
         if response.status_code is not 200:
-            sc = response.status_code
-            sr = response.text
-            response.close()
-            raise LNURLException("Bad status code {}: {}".format(sc, sr))
+            raise LNURLException("Bad status code {}: {}".format(response.status_code, response.text))
 
         data = response.json()
 
