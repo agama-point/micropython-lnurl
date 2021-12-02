@@ -3,8 +3,8 @@ from . import LNURL, LNURLException
 
 
 class LNURLPay(LNURL):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, value=None):
+        super().__init__(value)
 
 
     def _callserver(self, url):
